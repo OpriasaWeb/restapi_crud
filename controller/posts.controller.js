@@ -42,6 +42,37 @@ const postsController = {
         status: "error"
       })
     }
+  },
+  update: async (req, res) => {
+    try {
+      const { title, content } = req.body
+      const {id} = req.params
+      const sql = `UPDATE blog.posts SET title = ?, content = ? WHERE id = ?`
+      const [rows, fields] = await pool.query(sql, [title, content, id])
+      res.json({
+        data: rows
+      })
+    } catch (error) {
+      console.log(error)
+      res.json({
+        status: "error"
+      })
+    }
+  },
+  delete: async (req, res) => {
+    try {
+      const {id} = req.params
+      const sql = `DELETE FROM blog.posts WHERE id = ?`
+      const [rows, fields] = await pool.query(sql, [id])
+      res.json({
+        data: rows
+      })
+    } catch (error) {
+      console.log(error)
+      res.json({
+        status: "error"
+      })
+    }
   }
 }
 
